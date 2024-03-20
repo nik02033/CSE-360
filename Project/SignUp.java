@@ -12,6 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 
 public class SignUp {
 	  public SignUp(Stage stage) {
@@ -23,6 +26,14 @@ public class SignUp {
 	        Text header = new Text("Sign up");
 	        header.getStyleClass().add("header");
 
+	        
+	        // Load the logo image
+	        Image logoImage = new Image(getClass().getResourceAsStream("logo.png"));
+	        ImageView logoImageView = new ImageView(logoImage);
+	        logoImageView.setFitWidth(200); // Adjust the width as needed
+	        logoImageView.setPreserveRatio(true);
+	        
+	        
 	        // Form fields
 	        TextField nameField = new TextField();
 	        nameField.setPromptText("Enter your full name");
@@ -60,7 +71,7 @@ public class SignUp {
 	        gridPane.add(signUpButton, 0, 6);
 
 	        VBox vBox = new VBox(10);
-	        vBox.getChildren().addAll(header, gridPane);
+	        vBox.getChildren().addAll(logoImageView,header, gridPane);
 	        vBox.setAlignment(Pos.CENTER);
 
 	        HBox root = new HBox(20);

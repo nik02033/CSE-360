@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class basic extends Application
 {
 	public void start(Stage stage) {
-		SignUp obj = new SignUp(stage);
+		SignIn obj = new SignIn(stage);
 		obj.start(stage);
 	}
 	
