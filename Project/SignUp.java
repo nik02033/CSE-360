@@ -24,7 +24,6 @@ public class SignUp {
 	public void start(Stage stage) {
 	        // Header
 	        Text header = new Text("Sign up");
-	        header.getStyleClass().add("header");
 
 	        
 	        // Load the logo image
@@ -53,8 +52,7 @@ public class SignUp {
 	        CheckBox termsCheckBox = new CheckBox("By signing up, you agree to the Terms and Privacy Policy.");
 
 	        Button signUpButton = new Button("Sign up");
-	        signUpButton.getStyleClass().add("sign-up-button");
-
+	       
 	        // Layout
 	        GridPane gridPane = new GridPane();
 	        gridPane.setAlignment(Pos.CENTER);
@@ -80,8 +78,7 @@ public class SignUp {
 	        
 	        // Apply CSS styling
 	        Scene scene = new Scene(root, 800, 500);
-	        scene.getStylesheets().add("style.css"); // Link to your CSS file
-
+	      
 	        stage.setTitle("PediaEase");
 	        stage.setScene(scene);
 	        stage.show();
