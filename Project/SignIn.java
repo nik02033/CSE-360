@@ -45,6 +45,13 @@ public class SignIn {
         Button signUpButton = new Button("Log In");
         signUpButton.getStyleClass().add("sign-up-button");
         
+        Text signUpLink = new Text("New User? Sign Up");
+        signUpLink.getStyleClass().add("hyperlink-style"); // Add this style class in your CSS file to style the text like a hyperlink
+        signUpLink.setOnMouseClicked(event -> {
+            SignUp signUpScreen = new SignUp(stage); // Assuming SignUp has a similar constructor
+            signUpScreen.start(stage); // Call the start method of SignUp, passing the current stage
+        });
+        
         
         // Layout
         GridPane gridPane = new GridPane();
@@ -59,6 +66,7 @@ public class SignIn {
         gridPane.add(emailField, 0, 0); 
         gridPane.add(passwordField, 0, 1);
         gridPane.add(signUpButton, 0, 2);
+        gridPane.add(signUpLink, 0, 3);
         GridPane.setHalignment(signUpButton, HPos.CENTER);
         VBox vBox = new VBox(10);
         vBox.getChildren().addAll(logoImageView,header, gridPane);
