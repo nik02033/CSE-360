@@ -26,12 +26,13 @@ public class SignIn {
 	public void start(Stage stage) {
         // Header
         Text header = new Text("Sign In");
-
         
+        HBox v = new HBox();
+                
         // Load the logo image
         Image logoImage = new Image(getClass().getResourceAsStream("logo.png"));
         ImageView logoImageView = new ImageView(logoImage);
-        logoImageView.setFitWidth(200); // Adjust the width as needed
+        logoImageView.setFitWidth(300); // Adjust the width as needed
         logoImageView.setPreserveRatio(true);
         
         TextField emailField = new TextField();
@@ -67,11 +68,14 @@ public class SignIn {
         gridPane.add(signUpLink, 0, 3);
         GridPane.setHalignment(signUpButton, HPos.CENTER);
         VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(logoImageView,header, gridPane);
+        vBox.getChildren().addAll(header, gridPane);
         vBox.setAlignment(Pos.CENTER);
-
+        v.setAlignment(Pos.CENTER_LEFT);
+        v.setSpacing(100);
+        v.getChildren().addAll(logoImageView,vBox);
+        
         HBox root = new HBox(20);
-        root.getChildren().add(vBox);
+        root.getChildren().add(v);
         root.setAlignment(Pos.CENTER);
         
         // Apply CSS styling
