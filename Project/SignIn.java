@@ -38,8 +38,14 @@ public class SignIn {
         // Load the logo image
         Image logoImage = new Image(getClass().getResourceAsStream("logo.png"));
         ImageView logoImageView = new ImageView(logoImage);
-        logoImageView.setFitWidth(300); // Adjust the width as needed
+        logoImageView.setFitWidth(320); // Adjust the width as needed
         logoImageView.setPreserveRatio(true);
+        
+        Image Image0 = new Image(getClass().getResourceAsStream("Image.png"));
+        ImageView Image1 = new ImageView(Image0);
+        Image1.setFitWidth(280); // Adjust the width as needed
+        Image1.setPreserveRatio(true);
+
         
         Text emailText = new Text("Username");
         emailText.setFont(Font.font("System",FontWeight.BOLD,11.5));
@@ -86,11 +92,18 @@ public class SignIn {
         GridPane.setHalignment(signUpButton, HPos.CENTER);
         GridPane.setHalignment(signUpLink, HPos.CENTER);
         VBox vBox = new VBox(10);
+        
         vBox.getChildren().addAll(header,gridPane);
         vBox.setAlignment(Pos.CENTER);
+        
+        VBox vBox1 = new VBox();
+        vBox1.getChildren().addAll(logoImageView,Image1);
+        vBox1.setAlignment(Pos.CENTER);
+        vBox1.setSpacing(-50);
+        
         v.setAlignment(Pos.CENTER_LEFT);
         v.setSpacing(100);
-        v.getChildren().addAll(logoImageView,vBox);
+        v.getChildren().addAll(vBox1,vBox);
         
         HBox root = new HBox(20);
         root.getChildren().add(v);

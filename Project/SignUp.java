@@ -38,9 +38,13 @@ public class SignUp {
 	        // Load the logo image
 	        Image logoImage = new Image(getClass().getResourceAsStream("logo.png"));
 	        ImageView logoImageView = new ImageView(logoImage);
-	        logoImageView.setFitWidth(250); // Adjust the width as needed
+	        logoImageView.setFitWidth(300); // Adjust the width as needed
 	        logoImageView.setPreserveRatio(true);
 	        
+	        Image Image0 = new Image(getClass().getResourceAsStream("Image.png"));
+	        ImageView Image1 = new ImageView(Image0);
+	        Image1.setFitWidth(270); // Adjust the width as needed
+	        Image1.setPreserveRatio(true);
 	        
 	        // Form fields
 	        Text nameText = new Text("Name");
@@ -105,9 +109,16 @@ public class SignUp {
 	        VBox vBox = new VBox(10);
 	        vBox.getChildren().addAll(header, header1, gridPane);
 	        vBox.setAlignment(Pos.CENTER);
-	        v.setAlignment(Pos.CENTER_LEFT);
+	        
+	        VBox vBox1 = new VBox();
+	        vBox1.getChildren().addAll(logoImageView,Image1);
+	        vBox1.setAlignment(Pos.CENTER_RIGHT);
+	        vBox1.setSpacing(-20);
+	        
+	        v.setAlignment(Pos.CENTER);
 	        v.setSpacing(100);
-	        v.getChildren().addAll(logoImageView,vBox);
+	        v.setPadding(new Insets(25,35,30,25));
+	        v.getChildren().addAll(vBox1,vBox);
 	        
 	        HBox root = new HBox(20);
 	        root.getChildren().add(v);
