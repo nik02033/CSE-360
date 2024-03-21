@@ -74,8 +74,9 @@ public class SignUp {
 	        PasswordField confirmPasswordField = new PasswordField();
 	        confirmPasswordField.setPromptText("Confirm your password");
 
-	        CheckBox termsCheckBox = new CheckBox("By signing up, you agree to the Terms and Privacy Policy.");
+	        CheckBox termsCheckBox = new CheckBox("By clicking, you agree to the Terms and Privacy Policy.");
 	        termsCheckBox.setCursor(Cursor.HAND);
+	        
 	        
 	        Button signUpButton = new Button("Sign up");
 	        signUpButton.setCursor(Cursor.HAND);
@@ -87,7 +88,7 @@ public class SignUp {
 	        // Layout
 	        GridPane gridPane = new GridPane();
 	        gridPane.setAlignment(Pos.CENTER);
-	        gridPane.setPadding(new Insets(10, 10, 10, 10));
+	        gridPane.setPadding(new Insets(6, 10, 10, 10));
 	        gridPane.setVgap(10);
 	        gridPane.setHgap(10);
 	        

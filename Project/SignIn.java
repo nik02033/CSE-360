@@ -66,14 +66,18 @@ public class SignIn {
         signUpButton.setTextFill(Color.WHITE); // Set text color
         signUpButton.setStyle("-fx-background-color: #45257d;");
         signUpButton.setPrefWidth(250);
-        Text signUpLink = new Text("New User ? SignUp instead");
+        Text signUpLink = new Text("New User ? Sign Up instead");
         signUpLink.setFill(Color.BLACK); // Set the text color to blue
-        signUpLink.setUnderline(true); // Underline the text
+        signUpLink.setOnMouseEntered(e -> signUpLink.setUnderline(true));
+        signUpLink.setOnMouseExited(e -> signUpLink.setUnderline(false));
+        
+        
         signUpLink.setCursor(Cursor.HAND);
         
         signUpLink.setOnMouseClicked(event -> {
             SignUp signUpScreen = new SignUp(stage); // Assuming SignUp has a similar constructor
             signUpScreen.start(stage); // Call the start method of SignUp, passing the current stage
+            
         });
         
         // Layout
