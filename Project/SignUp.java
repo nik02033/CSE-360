@@ -187,8 +187,7 @@ public class SignUp {
 			Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
 			confirmAlert.setTitle("Registration Successful");
 			confirmAlert.setHeaderText(null);
-			confirmAlert
-					.setContentText("Patient information has been successfully saved. Proceeding to the next step.");
+			confirmAlert.setContentText("Patient information has been successfully saved. Proceeding to the next step.");
 			confirmAlert.showAndWait();
 
 			Platform.runLater(() -> {
