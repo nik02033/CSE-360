@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,7 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+
 
 public class SignIn {
 	public SignIn(Stage stage) {
@@ -84,7 +85,8 @@ public class SignIn {
 		});
 		
 		signUpButton.setOnAction(event -> {
-			readPatientData(emailField,passwordField);
+			readPatientData(emailField,passwordField,stage);
+			
 		});
 		
 
@@ -129,7 +131,7 @@ public class SignIn {
 		stage.show();
 	}
 
-	private void readPatientData(TextField username, TextField password) {
+	private void readPatientData(TextField username, TextField password, Stage stage) {
 		try {
 			String patientInfoFilename =  username.getText() + "_PatientInfo.txt";
 			if (new File(patientInfoFilename).exists()) {
@@ -140,6 +142,10 @@ public class SignIn {
 					confirmAlert.setHeaderText(null);
 					confirmAlert.setContentText("You have successfully logged in. Proceeding to the next step.");
 					confirmAlert.showAndWait();
+					Platform.runLater(() -> {
+						PatientLanding patientPage = new PatientLanding(stage);
+						patientPage.start(stage);
+					});
 				}
 				else {
 					Alert alert = new Alert(Alert.AlertType.ERROR);
