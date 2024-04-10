@@ -58,6 +58,12 @@ public class DoctorView {
 		
 		msgImageView.setCursor(Cursor.HAND);
 		
+		msgImageView.setOnMouseClicked(event -> {
+			Messaging msg1 = new Messaging(stage,user); // Assuming SignUp has a similar constructor
+			msg1.start(stage); // Call the start method of SignUp, passing the current stage
+
+		});
+		
 
 		Image logoImage = new Image(getClass().getResourceAsStream("logo1.png"));
 		ImageView logoImageView = new ImageView(logoImage);
