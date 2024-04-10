@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,19 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Messaging {
     private String currentUser;
-    private VBox messagesDisplay = new VBox(5); // VBox to display messages
-    private ScrollPane messagesScrollPane = new ScrollPane(messagesDisplay);
+
     
     public Messaging(Stage stage, String user) {
         currentUser = user;
@@ -70,8 +64,6 @@ public class Messaging {
 
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
-        HBox mainContent = new HBox();
-
 
         TextField searchField = new TextField();
         searchField.setPromptText("Enter username...");
@@ -81,7 +73,6 @@ public class Messaging {
         topPanel.setAlignment(Pos.CENTER_RIGHT);
 
         ListView<String> conversationsList = new ListView<>();
-        conversationsList.setPrefWidth(240);
         root.setCenter(conversationsList);
 
         TextField messageInput = new TextField();
@@ -89,15 +80,6 @@ public class Messaging {
         HBox bottomPanel = new HBox(10, messageInput, sendButton);
         bottomPanel.setPadding(new Insets(10));
         bottomPanel.setAlignment(Pos.CENTER);
-        
-        mainContent.getChildren().addAll(conversationsList, messagesScrollPane);
-        HBox.setHgrow(messagesScrollPane, Priority.ALWAYS);
-        
-        root.setCenter(mainContent);
-        
-        messagesScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
-        messagesScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Show vertical scrollbar as needed
-        messagesDisplay.setPadding(new Insets(10));
 
         newConversationButton.setOnAction(e -> startNewConversation(searchField.getText(), conversationsList));
 
@@ -107,10 +89,10 @@ public class Messaging {
                 String selectedConversation = conversationsList.getSelectionModel().getSelectedItem();
                 // Assuming the conversation format is "Chat with {username}"
                 String patientUsername = selectedConversation.replace("Chat with ", "");
-              
-                // Logic to extract the patientUsername and update filename accordingly
                 String filename = patientUsername + "_msg_" + currentUser + ".txt";
-                loadAndDisplayMessages(filename);
+
+                // Append message to file
+                appendMessageToFile(filename, messageInput.getText());
                 messageInput.clear(); // Clear the input field after sending
             }
         });
@@ -122,38 +104,5 @@ public class Messaging {
         stage.setTitle("Messaging");
         stage.setScene(scene);
         stage.show();
-    }
-    private void loadAndDisplayMessages(String filename) {
-        messagesDisplay.getChildren().clear(); // Clear previous messages
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(filename));
-            for (String line : lines) {
-                // Assuming each line in the file is a message with its timestamp
-                // Format: "YYYY/MM/DD HH:MM:SS - Message"
-                int separatorIndex = line.indexOf(" - ");
-                if (separatorIndex != -1) {
-                    String timestampStr = line.substring(0, separatorIndex);
-                    String messageText = line.substring(separatorIndex + 3);
-                    LocalDateTime timestamp = LocalDateTime.parse(timestampStr, DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
-                    Message message = new Message(messageText, timestamp);
-                    Text messageDisplayText = new Text(message.getDisplayText());
-                    messagesDisplay.getChildren().add(messageDisplayText);
-                }
-            }
-        } catch (IOException e) {
-            showAlert("Error", "Could not load messages.");
-        }
-
-        // Scroll to the bottom to show the most recent messages
-        messagesScrollPane.setVvalue(1.0);
-    }
-
-    private void appendMessageToFileAndDisplay(String filename, String messageText) {
-        LocalDateTime now = LocalDateTime.now();
-        Message message = new Message(messageText, now);
-        appendMessageToFile(filename, message.getDisplayText()); // Use the existing method to append to file
-        Text messageDisplayText = new Text(message.getDisplayText());
-        messagesDisplay.getChildren().add(messageDisplayText);
-        messagesScrollPane.setVvalue(1.0); // Scroll to the bottom
     }
 }
