@@ -1,11 +1,14 @@
 package Project;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -15,26 +18,39 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class PatientLanding {
-
-	public PatientLanding(Stage stage) {
+public class DoctorView {
+	String user;
+	
+	public DoctorView(Stage stage, String user) {
 		// TODO Auto-generated constructor stub
+		this.user =	user;
 	}
 
-	public void start(Stage stage) {
+	public void start(Stage stage){
 		Text appointmentsButton = new Text("Appointments");
-		Text profileSettingsButton = new Text("Profile");
-
+		
+		String doctorInfoFile = user + "_DoctorInfo.txt";
+		
+		String name = "default name";
+		
+		try {
+		    List<String> lines = Files.readAllLines(Paths.get(doctorInfoFile));
+		    name = lines.get(0);
+		   
+		} catch (IOException e) {
+		    // Handle the exception here. For example, log an error, show an error message, etc.
+		    System.err.println("Error reading from the file: " + e.getMessage());
+		    // Depending on your application, you might want to set a default name or take other actions
+		}
+		Text profileSettingsButton = new Text("Welcome Dr. " + name);
+		
 		appointmentsButton.setCursor(Cursor.HAND);
 		appointmentsButton.setFont(Font.font("Century", 13));
 		appointmentsButton.setOnMouseEntered(e -> appointmentsButton.setUnderline(true));
 		appointmentsButton.setOnMouseExited(e -> appointmentsButton.setUnderline(false));
 
-		profileSettingsButton.setCursor(Cursor.HAND);
 		profileSettingsButton.setFont(Font.font("Century", 13));
-		profileSettingsButton.setOnMouseEntered(e -> profileSettingsButton.setUnderline(true));
-		profileSettingsButton.setOnMouseExited(e -> profileSettingsButton.setUnderline(false));
-
+		
 		Image msgImage = new Image(getClass().getResourceAsStream("msg.png"));
 		ImageView msgImageView = new ImageView(msgImage);
 		msgImageView.setFitWidth(35); // Adjust the width as needed

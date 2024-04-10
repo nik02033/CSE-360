@@ -134,6 +134,26 @@ public class SignIn {
 	private void readPatientData(TextField username, TextField password, Stage stage) {
 		try {
 			String patientInfoFilename =  username.getText() + "_PatientInfo.txt";
+			String doctorInfoFile = username.getText() + "_DoctorInfo.txt";
+			if (new File(doctorInfoFile).exists()) {
+				List<String> lines = Files.readAllLines(Paths.get(doctorInfoFile));
+				if(lines.get(1).equals(password.getText())) {
+					Platform.runLater(() -> {
+						DoctorView doctor = new DoctorView(stage,username.getText());
+						doctor.start(stage);
+					});
+					return;
+				}
+				else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle("Incorrect Details");
+					alert.setHeaderText(null);
+					alert.setContentText("The username or password is/are incorrect");
+					alert.showAndWait();
+					return;
+				}
+			}
+			
 			if (new File(patientInfoFilename).exists()) {
 				List<String> lines = Files.readAllLines(Paths.get(patientInfoFilename));
 				if(lines.get(3).equals(password.getText())) {
