@@ -77,6 +77,12 @@ public class PatientLanding {
 		Text upcomingAppointmentsTitle = new Text("Upcoming Appointments");
 		upcomingAppointmentsTitle.setOnMouseClicked(e -> showAppointmentCreationForm(stage));
 		
+		upcomingAppointmentsTitle.setCursor(Cursor.HAND);
+		upcomingAppointmentsTitle.setFont(Font.font("Century", 13));
+		upcomingAppointmentsTitle.setOnMouseEntered(e -> profileSettingsButton.setUnderline(true));
+		upcomingAppointmentsTitle.setOnMouseExited(e -> profileSettingsButton.setUnderline(false));
+
+		
 
 		Text healthSummaryTitle = new Text("Health Summary");
 		
