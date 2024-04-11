@@ -92,17 +92,14 @@ public class DoctorView {
 		Text upcomingAppointmentsTitle = new Text("Upcoming Appointments");
 		
 
-		Text healthSummaryTitle = new Text("Health Summary");
+		
 		
 		Text messagesTitle = new Text("Messages");
 		
 
-		Text prescriptionsTitle = new Text("Prescriptions");
 		
-		Text healthTipsTitle = new Text("Health Tips/News");
 
-		dashboardContent.getChildren().addAll(upcomingAppointmentsTitle, healthSummaryTitle, messagesTitle,
-				prescriptionsTitle, healthTipsTitle);
+		dashboardContent.getChildren().addAll(upcomingAppointmentsTitle, messagesTitle);
 
 		BorderPane mainLayout = new BorderPane();
 		

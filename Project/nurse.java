@@ -1,4 +1,4 @@
-package application;
+package Project;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,8 +13,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class Main extends Application {
-    public void start(Stage primaryStage) {
+public class nurse {
+    String user;
+	public void start(Stage primaryStage) {
         try {
             VBox root = new VBox(10);
             root.setPadding(new Insets(15));
@@ -148,8 +149,9 @@ public class Main extends Application {
         }
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public nurse (Stage stage,String user){
+    	this.user =user;
+	}
+
 }
 

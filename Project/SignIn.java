@@ -135,6 +135,8 @@ public class SignIn {
 		try {
 			String patientInfoFilename =  username.getText() + "_PatientInfo.txt";
 			String doctorInfoFile = username.getText() + "_DoctorInfo.txt";
+			String nurseInfoFile = username.getText() + "_NurseInfo.txt";
+			
 			if (new File(doctorInfoFile).exists()) {
 				List<String> lines = Files.readAllLines(Paths.get(doctorInfoFile));
 				if(lines.get(1).equals(password.getText())) {
@@ -154,6 +156,26 @@ public class SignIn {
 				}
 			}
 			
+			if (new File(nurseInfoFile).exists()) {
+				List<String> lines = Files.readAllLines(Paths.get(nurseInfoFile));
+				if(lines.get(1).equals(password.getText())) {
+					Platform.runLater(() -> {
+						nurse nurseView = new nurse(stage,username.getText());
+						nurseView.start(stage);
+					});
+					return;
+				}
+				else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle("Incorrect Details");
+					alert.setHeaderText(null);
+					alert.setContentText("The username or password is/are incorrect");
+					alert.showAndWait();
+					return;
+				}
+			}
+			
+			
 			if (new File(patientInfoFilename).exists()) {
 				List<String> lines = Files.readAllLines(Paths.get(patientInfoFilename));
 				if(lines.get(3).equals(password.getText())) {
@@ -163,7 +185,7 @@ public class SignIn {
 					confirmAlert.setContentText("You have successfully logged in. Proceeding to the next step.");
 					confirmAlert.showAndWait();
 					Platform.runLater(() -> {
-						PatientLanding patientPage = new PatientLanding(stage);
+						PatientLanding patientPage = new PatientLanding(stage,username.getText());
 						patientPage.start(stage);
 					});
 				}
