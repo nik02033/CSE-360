@@ -123,7 +123,7 @@ public class PatientLanding {
 
         // Doctor selection
         ComboBox<String> doctorSelection = new ComboBox<>();
-        doctorSelection.setItems(FXCollections.observableArrayList("Doctor A", "Doctor B", "Doctor C", "Doctor D")); // Placeholder names
+        doctorSelection.setItems(FXCollections.observableArrayList("Dr. John Doe", "Dr. Sara Johnson", "Dr. Jessica Ship", "Dr Mathew Gray")); // Placeholder names
         doctorSelection.setPromptText("Select a Doctor");
 
         // Date picker
