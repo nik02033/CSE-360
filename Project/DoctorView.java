@@ -42,7 +42,7 @@ public class DoctorView {
 		    System.err.println("Error reading from the file: " + e.getMessage());
 		    // Depending on your application, you might want to set a default name or take other actions
 		}
-		Text profileSettingsButton = new Text("Welcome Dr. " + name);
+		Text profileSettingsButton = new Text("Welcome Dr. " + name);			//refrencing to doctor
 		
 		appointmentsButton.setCursor(Cursor.HAND);
 		appointmentsButton.setFont(Font.font("Century", 13));
