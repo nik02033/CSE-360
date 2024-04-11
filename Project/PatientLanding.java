@@ -1,11 +1,17 @@
 package Project;
 
 
+import java.time.*;
+
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -13,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class PatientLanding {
@@ -68,6 +75,7 @@ public class PatientLanding {
 		dashboardContent.setPadding(new Insets(15));
 
 		Text upcomingAppointmentsTitle = new Text("Upcoming Appointments");
+		upcomingAppointmentsTitle.setOnMouseClicked(e -> showAppointmentCreationForm(stage));
 		
 
 		Text healthSummaryTitle = new Text("Health Summary");
@@ -99,4 +107,45 @@ public class PatientLanding {
 		stage.setScene(scene);
 		stage.show();
 	}
+	public void showAppointmentCreationForm(Stage parentStage) {
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(parentStage);
+        stage.setTitle("Schedule an Appointment");
+
+        VBox layout = new VBox(10);
+
+        // Doctor selection
+        ComboBox<String> doctorSelection = new ComboBox<>();
+        doctorSelection.setItems(FXCollections.observableArrayList("Doctor A", "Doctor B", "Doctor C", "Doctor D")); // Placeholder names
+        doctorSelection.setPromptText("Select a Doctor");
+
+        // Date picker
+        DatePicker datePicker = new DatePicker();
+        datePicker.setValue(LocalDate.now());
+        datePicker.setPromptText("Select a Date");
+
+        // Time selection (simplified as ComboBox for example purposes)
+        ComboBox<String> timeSelection = new ComboBox<>();
+        timeSelection.setItems(FXCollections.observableArrayList("09:00", "10:00", "11:00", "14:00", "15:00")); // Example times
+        timeSelection.setPromptText("Select a Time");
+
+        // Submit button
+        Button submitButton = new Button("Schedule Appointment");
+        submitButton.setOnAction(e -> {
+            // Example action: print out selected values
+            System.out.println("Doctor: " + doctorSelection.getValue());
+            System.out.println("Date: " + datePicker.getValue());
+            System.out.println("Time: " + timeSelection.getValue());
+            // Here you would call your method to create the appointment file
+            // e.g., createAppointment(doctorSelection.getValue(), dateTime);
+            stage.close();
+        });
+
+        layout.getChildren().addAll(new Label("Schedule a New Appointment"), doctorSelection, datePicker, timeSelection, submitButton);
+        Scene scene = new Scene(layout, 300, 200);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+	
 }

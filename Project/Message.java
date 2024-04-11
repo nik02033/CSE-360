@@ -12,7 +12,8 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public String getText() {
+    public String getText() 
+    {
         return text;
     }
 
