@@ -90,17 +90,16 @@ public class PatientLanding {
 
 		
 
-		Text healthSummaryTitle = new Text("Health Summary");
+		
 		
 		Text messagesTitle = new Text("Messages");
 		
 
 		Text prescriptionsTitle = new Text("Prescriptions");
 		
-		Text healthTipsTitle = new Text("Health Tips/News");
-
-		dashboardContent.getChildren().addAll(upcomingAppointmentsTitle, healthSummaryTitle, messagesTitle,
-				prescriptionsTitle, healthTipsTitle);
+		
+		dashboardContent.getChildren().addAll(upcomingAppointmentsTitle, messagesTitle,
+				prescriptionsTitle);
 
 		BorderPane mainLayout = new BorderPane();
 		
