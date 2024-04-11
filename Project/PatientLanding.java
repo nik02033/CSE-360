@@ -23,9 +23,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class PatientLanding {
-
-	public PatientLanding(Stage stage) {
+	String user;
+	public PatientLanding(Stage stage,String user) {
 		// TODO Auto-generated constructor stub
+		this.user = user;
 	}
 
 	public void start(Stage stage) {
@@ -48,6 +49,11 @@ public class PatientLanding {
 		msgImageView.setPreserveRatio(true);
 		
 		msgImageView.setCursor(Cursor.HAND);
+		msgImageView.setOnMouseClicked(event -> {
+			Messaging msg1 = new Messaging(stage,user); // Assuming SignUp has a similar constructor
+			msg1.start(stage); // Call the start method of SignUp, passing the current stage
+
+		});
 		
 
 		Image logoImage = new Image(getClass().getResourceAsStream("logo1.png"));
@@ -79,8 +85,8 @@ public class PatientLanding {
 		
 		upcomingAppointmentsTitle.setCursor(Cursor.HAND);
 		upcomingAppointmentsTitle.setFont(Font.font("Century", 13));
-		upcomingAppointmentsTitle.setOnMouseEntered(e -> profileSettingsButton.setUnderline(true));
-		upcomingAppointmentsTitle.setOnMouseExited(e -> profileSettingsButton.setUnderline(false));
+		upcomingAppointmentsTitle.setOnMouseEntered(e -> upcomingAppointmentsTitle.setUnderline(true));
+		upcomingAppointmentsTitle.setOnMouseExited(e -> upcomingAppointmentsTitle.setUnderline(false));
 
 		
 

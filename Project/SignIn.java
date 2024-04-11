@@ -163,7 +163,7 @@ public class SignIn {
 					confirmAlert.setContentText("You have successfully logged in. Proceeding to the next step.");
 					confirmAlert.showAndWait();
 					Platform.runLater(() -> {
-						PatientLanding patientPage = new PatientLanding(stage);
+						PatientLanding patientPage = new PatientLanding(stage,username.getText());
 						patientPage.start(stage);
 					});
 				}
