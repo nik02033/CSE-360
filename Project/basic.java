@@ -8,6 +8,7 @@ public class basic extends Application
 {
 	public void start(Stage stage) {
 		SignIn obj = new SignIn(stage);
+		
 		obj.start(stage);
 	}
 	
