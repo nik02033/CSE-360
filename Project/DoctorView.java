@@ -122,41 +122,7 @@ public class DoctorView {
 		stage.setScene(scene);
 		stage.show();
 	}
-//	public void displayAllAppointmentsForDoctor(String doctorUsername) {
-//	    File folder = new File("."); // Use the current directory; adjust if necessary
-//	    File[] listOfFiles = folder.listFiles();
-//
-//	    boolean appointmentsFound = false;
-//
-//	    if (listOfFiles != null) {
-//	        for (File file : listOfFiles) {
-//	            String filename = file.getName();
-//	            // Check if the filename starts with the doctor's username followed by "_appointment"
-//	            if (filename.startsWith(doctorUsername + "_appointment") && filename.endsWith(".txt")) {
-//	                appointmentsFound = true;
-//	                try {
-//	                    // Read all lines from the file
-//	                    List<String> lines = Files.readAllLines(Paths.get(filename));
-//	                    if (lines.size() >= 2) {
-//	                        String patientUsername = filename.substring((doctorUsername + "_appointment_").length(), filename.length() - 4);
-//	                        String date = lines.get(0);  // First line is the date
-//	                        String time = lines.get(1);  // Second line is the time
-//
-//	                        // Display the appointment details
-//	                        displayAppointmentInfo(doctorUsername, patientUsername, date, time);
-//	                    } else {
-//	                        showError("Appointment data is incomplete in " + filename + ".");
-//	                    }
-//	                } catch (IOException e) {
-//	                    showError("Failed to read appointment details from " + filename + ": " + e.getMessage());
-//	                }
-//	            }
-//	        }
-//	        if (!appointmentsFound) {
-//	            showError("No appointment details found for Dr. " + doctorUsername);
-//	        }
-//	    }
-//	}
+	
 	private void displayAllAppointmentsForDoctor(String doctorUsername) {
 		Stage stage = new Stage(); // Create a new stage for displaying appointments
 	    VBox layout = new VBox(10); // Vertical layout with spacing between nodes
