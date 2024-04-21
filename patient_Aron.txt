@@ -1,0 +1,8 @@
+Patient Name: Aron
+Height: 167
+Weight: 120
+Blood Pressure: 62
+Body Temperature: 89
+Allergies: None
+Gender: Male
+Insurance: No, thanks
