@@ -1,13 +1,19 @@
 package Project;
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.*;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -87,10 +93,6 @@ public class PatientLanding {
 		upcomingAppointmentsTitle.setFont(Font.font("Century", 13));
 		upcomingAppointmentsTitle.setOnMouseEntered(e -> upcomingAppointmentsTitle.setUnderline(true));
 		upcomingAppointmentsTitle.setOnMouseExited(e -> upcomingAppointmentsTitle.setUnderline(false));
-
-		
-
-		
 		
 		Text messagesTitle = new Text("Messages");
 		
@@ -144,12 +146,41 @@ public class PatientLanding {
         // Submit button
         Button submitButton = new Button("Schedule Appointment");
         submitButton.setOnAction(e -> {
-            // Example action: print out selected values
-            System.out.println("Doctor: " + doctorSelection.getValue());
-            System.out.println("Date: " + datePicker.getValue());
-            System.out.println("Time: " + timeSelection.getValue());
-            // Here you would call your method to create the appointment file
-            // e.g., createAppointment(doctorSelection.getValue(), dateTime);
+            String doctoruser;
+        	if(doctorSelection.getValue()=="Dr. John Doe") {
+        		doctoruser = "JDoe";
+            }
+        	else if(doctorSelection.getValue()=="Dr. Sara Johnson") {
+        		doctoruser = "SJohn";
+            }
+        	else if(doctorSelection.getValue()=="Dr. Jessica Ship") {
+        		doctoruser = "JShip";
+            }
+        	else {
+        		doctoruser = "MGray";
+            }
+        	String filename =  doctoruser + "_appointment_" + this.user + ".txt";
+    		File file = new File(filename);
+    		if (file.exists()) {
+    			// Show an error popup because the username is taken
+    			Alert alert = new Alert(Alert.AlertType.ERROR);
+    			alert.setTitle("Appointment Exists");
+    			alert.setHeaderText(null);
+    			alert.setContentText("Appointment Exists");
+    			alert.showAndWait();
+    			return; // Exit the method early
+    		}
+    		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+    			writer.write(datePicker.getValue().toString());
+    			writer.newLine();
+    			writer.write(timeSelection.getValue());
+    			writer.newLine();
+
+    		} catch (IOException ex) {
+    			ex.printStackTrace();
+    			// Here, handle the error, maybe show an error message dialog
+    		}
+    		
             stage.close();
         });
 
