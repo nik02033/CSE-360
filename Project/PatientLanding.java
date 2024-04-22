@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -96,7 +97,7 @@ public class PatientLanding {
 		VBox dashboardContent = new VBox(10);
 		dashboardContent.setPadding(new Insets(15));
 
-		Text upcomingAppointmentsTitle = new Text("Upcoming Appointments");
+		Text upcomingAppointmentsTitle = new Text("Schedule an Appointment");
 		upcomingAppointmentsTitle.setOnMouseClicked(e -> showAppointmentCreationForm(stage));
 		
 		upcomingAppointmentsTitle.setCursor(Cursor.HAND);
@@ -108,7 +109,9 @@ public class PatientLanding {
 		
 
 		Text prescriptionsTitle = new Text("Prescriptions");
-		
+		prescriptionsTitle.setOnMouseClicked(event -> {
+			displayPatientNotes(stage);
+		});
 		
 		dashboardContent.getChildren().addAll(upcomingAppointmentsTitle, messagesTitle,
 				prescriptionsTitle);
@@ -353,5 +356,30 @@ public class PatientLanding {
 	    stage.setScene(scene);
 	    stage.show();
 	}
-	
+	public void displayPatientNotes( Stage stage) {
+	    VBox layout = new VBox(10);
+	    TextArea notesArea = new TextArea();
+	    notesArea.setEditable(false); // Make the text area non-editable
+	    
+	    String patientUsername = this.user;
+	    String notesFilename = patientUsername + "Notes.txt";
+	    
+	    // Read the notes from the file
+	    String content = "";
+	    try {
+	        content = new String(Files.readAllBytes(Paths.get(notesFilename)));
+	        notesArea.setText(content);
+	    } catch (IOException e) {
+	        notesArea.setText("No notes found for " + patientUsername);
+	        // Handle exception as appropriate for your application
+	        e.printStackTrace();
+	    }
+
+	    layout.getChildren().addAll(notesArea);
+
+	    Scene scene = new Scene(layout, 600, 400);
+	    stage.setTitle("Notes for " + patientUsername);
+	    stage.setScene(scene);
+	    stage.show();
+	}
 }

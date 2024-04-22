@@ -30,7 +30,7 @@ public class nurse {
             form.setHgap(10);
 
             // Labels
-            Label nameLabel = new Label("Patient Name");
+            Label nameLabel = new Label("Username");
             Label heightLabel = new Label("Height");
             Label weightLabel = new Label("Weight");
             Label bloodPressureLabel = new Label("Blood Pressure");
@@ -40,7 +40,7 @@ public class nurse {
             
             // Input fields
             TextField nameInput = new TextField();
-            nameInput.setPromptText("Enter name");
+            nameInput.setPromptText("Enter username");
             TextField heightInput = new TextField();
             heightInput.setPromptText("Enter height");
             TextField weightInput = new TextField();
@@ -113,7 +113,7 @@ public class nurse {
                 String insurance = ((RadioButton) insuranceGroup.getSelectedToggle()).getText();
 
                 // Create content for the file
-                String content = "Patient Name: " + patientName + "\n" +
+                String content = "Username " + patientName + "\n" +
                                  "Height: " + height + "\n" +
                                  "Weight: " + weight + "\n" +
                                  "Blood Pressure: " + bloodPressure + "\n" +
