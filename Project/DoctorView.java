@@ -1,6 +1,8 @@
 package Project;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,9 +16,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -102,6 +106,10 @@ public class DoctorView {
 
 		Text upcomingAppointmentsTitle = new Text("Upcoming Appointments");
 
+		upcomingAppointmentsTitle.setOnMouseClicked(event -> {
+			displayAppointments(this.user, stage);
+		});
+
 		Text messagesTitle = new Text("Messages");
 
 		dashboardContent.getChildren().addAll(upcomingAppointmentsTitle, messagesTitle);
@@ -122,65 +130,139 @@ public class DoctorView {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
+
 	private void displayAllAppointmentsForDoctor(String doctorUsername) {
 		Stage stage = new Stage(); // Create a new stage for displaying appointments
-	    VBox layout = new VBox(10); // Vertical layout with spacing between nodes
-	    layout.setStyle("-fx-padding: 10;"); // Padding around the VBox
+		VBox layout = new VBox(10); // Vertical layout with spacing between nodes
+		layout.setStyle("-fx-padding: 10;"); // Padding around the VBox
 
-	    File folder = new File("."); // Use the current directory; adjust if necessary
-	    File[] listOfFiles = folder.listFiles();
-	    boolean noAppointmentsFound = true;
+		File folder = new File("."); // Use the current directory; adjust if necessary
+		File[] listOfFiles = folder.listFiles();
+		boolean noAppointmentsFound = true;
 
-	    if (listOfFiles != null) {
-	        for (File file : listOfFiles) {
-	            String filename = file.getName();
-	            if (filename.startsWith(doctorUsername + "_appointment") && filename.endsWith(".txt")) {
-	                noAppointmentsFound = false; // Found at least one appointment file
-	                try {
-	                    List<String> lines = Files.readAllLines(Paths.get(filename));
-	                    if (lines.size() >= 2) {
-	                        String patientUsername = filename.substring((doctorUsername + "_appointment_").length(), filename.length() - 4);
-	                        String date = lines.get(0);
-	                        String time = lines.get(1);
+		if (listOfFiles != null) {
+			for (File file : listOfFiles) {
+				String filename = file.getName();
+				if (filename.startsWith(doctorUsername + "_appointment") && filename.endsWith(".txt")) {
+					noAppointmentsFound = false; // Found at least one appointment file
+					try {
+						List<String> lines = Files.readAllLines(Paths.get(filename));
+						if (lines.size() >= 2) {
+							String patientUsername = filename.substring((doctorUsername + "_appointment_").length(),
+									filename.length() - 4);
+							String date = lines.get(0);
+							String time = lines.get(1);
 
-	                        // Create a node for each appointment
-	                        VBox appointmentNode = new VBox(5);
-	                        Label appointmentInfo = new Label(String.format("Patient %s: %s at %s", patientUsername, date, time));
-	                        Button deleteButton = new Button("Delete");
-	                        deleteButton.setOnAction(e -> {
-	                            file.delete(); // Delete the file
-	                            layout.getChildren().remove(appointmentNode); // Remove the node from the layout
-	                        });
+							// Create a node for each appointment
+							VBox appointmentNode = new VBox(5);
+							Label appointmentInfo = new Label(
+									String.format("Patient %s: %s at %s", patientUsername, date, time));
+							Button deleteButton = new Button("Delete");
+							deleteButton.setOnAction(e -> {
+								file.delete(); // Delete the file
+								layout.getChildren().remove(appointmentNode); // Remove the node from the layout
+							});
 
-	                        appointmentNode.getChildren().addAll(appointmentInfo, deleteButton);
-	                        layout.getChildren().add(appointmentNode);
-	                    }
-	                } catch (IOException e) {
-	                    showError("Failed to read appointment details from " + filename + ": " + e.getMessage());
-	                }
-	            }
-	        }
-	    }
+							appointmentNode.getChildren().addAll(appointmentInfo, deleteButton);
+							layout.getChildren().add(appointmentNode);
+						}
+					} catch (IOException e) {
+						showError("Failed to read appointment details from " + filename + ": " + e.getMessage());
+					}
+				}
+			}
+		}
 
-	    // Check if no appointments were found
-	    if (noAppointmentsFound) {
-	        Label noAppointmentsLabel = new Label("No upcoming appointments for Dr. " + doctorUsername);
-	        layout.getChildren().add(noAppointmentsLabel);
-	    }
+		// Check if no appointments were found
+		if (noAppointmentsFound) {
+			Label noAppointmentsLabel = new Label("No upcoming appointments for Dr. " + doctorUsername);
+			layout.getChildren().add(noAppointmentsLabel);
+		}
 
-	    Scene scene = new Scene(layout, 400, 300);
-	    stage.setScene(scene);
-	    stage.setTitle("Appointments for Dr. " + doctorUsername);
-	    stage.show();
+		Scene scene = new Scene(layout, 400, 300);
+		stage.setScene(scene);
+		stage.setTitle("Appointments for Dr. " + doctorUsername);
+		stage.show();
 	}
 
 	private void showError(String message) {
-	    Alert alert = new Alert(Alert.AlertType.ERROR);
-	    alert.setTitle("Error");
-	    alert.setHeaderText(null);
-	    alert.setContentText(message);
-	    alert.showAndWait();
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+
+	public void displayAppointments(String doctorUsername, Stage stage) {
+		VBox layout = new VBox(10);
+		File dir = new File("."); // Directory where the files are located; adjust as necessary
+		File[] filesList = dir
+				.listFiles((d, name) -> name.startsWith(doctorUsername + "_appointment_") && name.endsWith(".txt"));
+
+		if (filesList != null) {
+			for (File file : filesList) {
+				// Extract the patient's username from the filename
+				String filename = file.getName();
+				String patientUsername = filename.substring((doctorUsername + "_appointment_").length(),
+						filename.length() - ".txt".length());
+
+				Button appointmentButton = new Button("Start appointment for " + patientUsername);
+				appointmentButton.setAlignment(Pos.CENTER);
+				appointmentButton.setOnAction(e -> startAppointment(patientUsername));
+				layout.getChildren().add(appointmentButton);
+			}
+		}
+
+		stage.setScene(new Scene(layout, 600, 400));
+		stage.show();
+	}
+
+	public void startAppointment(String patientUsername) {
+		Stage appointmentStage = new Stage();
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20));
+
+		// Read patient details
+		String filename = "patient_" + patientUsername + ".txt";
+		String content = "";
+		try {
+			content = new String(Files.readAllBytes(Paths.get(filename)));
+		} catch (IOException e) {
+			e.printStackTrace(); // Add proper error handling here
+		}
+
+		// Assume that the patient details are formatted in a consistent manner
+		TextArea detailsArea = new TextArea(content);
+		detailsArea.setEditable(false);
+
+		TextArea notesArea = new TextArea();
+		notesArea.setPromptText("Enter notes or prescription details here...");
+
+		Button saveNotesButton = new Button("Save Notes");
+		saveNotesButton.setOnAction(e -> savePatientNotes(patientUsername, notesArea.getText()));
+
+		grid.add(new Label("Patient Details:"), 0, 0);
+		grid.add(detailsArea, 0, 1);
+		grid.add(new Label("Doctor's Notes:"), 0, 2);
+		grid.add(notesArea, 0, 3);
+		grid.add(saveNotesButton, 0, 4);
+
+		Scene scene = new Scene(grid, 600, 400);
+		appointmentStage.setScene(scene);
+		appointmentStage.setTitle("Appointment for " + patientUsername);
+		appointmentStage.show();
+	}
+
+	// Method to save the doctor's notes to a file
+	private void savePatientNotes(String patientUsername, String notes) {
+		String filename = patientUsername + "Notes.txt";
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+			writer.write(notes);
+		} catch (IOException e) {
+			e.printStackTrace(); // Add proper error handling here
+		}
 	}
 
 }
